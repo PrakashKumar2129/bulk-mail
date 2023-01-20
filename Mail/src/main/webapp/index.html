@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" />
+    <title>Bulk Mail Tool</title>
+
+    <style>
+        body {
+            background-color: brown;
+        }
+
+        .container {
+            width: 60%;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -5%);
+            position: absolute;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .container h2 {
+            text-align: center;
+            padding: 5px;
+        }
+
+        .row {
+            margin: 10px;
+        }
+
+        #toDisplay {
+            display: none;
+            border: none;
+            overflow-y:visible;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form action="mailServlet" method="post" autocomplete="off">
+
+        <div class="container">
+            <h2>Bulk Mail Tool</h2>
+
+            <div class="row">
+                <textarea id="toDisplay" rows="4" name="toMail" readonly class="form-control"></textarea>
+            </div>
+
+            <div class="row">
+                <label for="to" class="form-label">To Address : </label>
+                <div class="input-group">
+                    <input type="email" class="form-control" placeholder="type mail address..." id="to" >
+                    <input type="button" class="btn btn-success" onclick="add()" value="Add" />
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="sub" class="form-label">Subject : </label>
+                <input type="text" name="sub" id="sub" class="form-control" placeholder="type subject...." required>
+            </div>
+
+            <div class="row">
+                <label for="msg" class="form-label">Message : </label>
+                <textarea name="msg" id="msg" rows="7" class="form-control"
+                    placeholder="type message here..." required></textarea>
+            </div>
+
+            <div class="row">
+                <input type="submit" value="Send" class="btn btn-primary">
+            </div>
+
+        </div>
+    </form>
+
+    <script>
+        let toMail = document.getElementById("to");
+        let toDisplay = document.getElementById("toDisplay");
+
+        function add() {
+            let partten = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+            let toMailValue = toMail.value;
+
+            if (toMailValue.match(partten)) {
+                toDisplay.style.display = "block";
+                toDisplay.innerHTML += toMail.value + ", ";
+                // toDisplay.style.height = toDisplay.value.length + "px";
+                toMail.value = "";
+                toMail.focus();
+            }
+            else {
+                alert("enter valid mail id...")
+                toMail.value = "";
+                toMail.focus();
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
